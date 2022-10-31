@@ -1,6 +1,6 @@
 declare global {
   export interface Window {
-    foo: number
+    foo: number;
   }
 }
-export {}
+export {};

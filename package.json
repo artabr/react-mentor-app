@@ -15,9 +15,6 @@
     }
   },
   "lint-staged": {
-    "*.{js,jsx,ts,tsx,css,scss,less}": [
-      "prettier --ignore-path ./.prettierignore --write "
-    ],
     "*.{js,jsx,ts,tsx}": [
       "eslint"
     ]
@@ -28,14 +25,23 @@
     "react-dom": "18.2.0"
   },
   "devDependencies": {
-    "@innei-util/eslint-config-react-ts": "^0.2.1",
-    "@innei-util/prettier": "^0.8.2",
     "@types/node": "18.7.13",
     "@types/react": "18.0.15",
     "@types/react-dom": "18.0.6",
+    "@typescript-eslint/eslint-plugin": "^5.41.0",
+    "@typescript-eslint/parser": "^5.41.0",
     "@vitejs/plugin-react": "^2",
     "autoprefixer": "10.4.7",
-    "eslint": "8.20.0",
+    "eslint": "8.22.0",
+    "eslint-config-airbnb": "^19.0.4",
+    "eslint-config-airbnb-typescript": "^17.0.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-jsx-a11y": "^6.6.1",
+    "eslint-plugin-prettier": "^4.2.1",
+    "eslint-plugin-react": "^7.31.10",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-tailwindcss": "^3.6.2",
     "husky": "8.0.1",
     "lint-staged": "13.0.3",
     "postcss": "8.4.14",
