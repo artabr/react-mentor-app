@@ -1,0 +1,56 @@
+{
+  "env": {
+    "browser": true
+  },
+  "extends": [
+    "plugin:tailwindcss/recommended",
+    "airbnb",
+    "airbnb/hooks",
+    "prettier"
+  ],
+  "plugins": [
+    "tailwindcss",
+    "@typescript-eslint",
+    "prettier"
+  ],
+  "rules": {
+    "prettier/prettier": [
+      "error"
+    ],
+    "import/prefer-default-export": "off",
+    "react/react-in-jsx-scope": "off",
+    "react/destructuring-assignment": "off",
+    "react/require-default-props": "off",
+    "react/function-component-definition": [
+      2,
+      {
+        "namedComponents": [
+          "function-declaration"
+        ],
+        "unnamedComponents": [
+          "arrow-function"
+        ]
+      }
+    ],
+    "jsx-a11y/label-has-associated-control": "off",
+    "jsx-a11y/anchor-is-valid": "off"
+  },
+  "overrides": [
+    {
+      "files": [
+        "*.ts",
+        "*.tsx"
+      ],
+      "extends": [
+        "airbnb-typescript",
+        "plugin:@typescript-eslint/recommended",
+        "plugin:@typescript-eslint/recommended-requiring-type-checking"
+      ],
+      "parserOptions": {
+        "project": [
+          "./tsconfig.json"
+        ]
+      }
+    }
+  ]
+}

@@ -1,11 +1,15 @@
-import { defineConfig } from 'vite'
-import { checker } from 'vite-plugin-checker'
-import tsconfigPaths from 'vite-tsconfig-paths'
+import { defineConfig } from 'vite';
+import { checker } from 'vite-plugin-checker';
+import tsconfigPaths from 'vite-tsconfig-paths';
 
-import reactRefresh from '@vitejs/plugin-react'
+import reactRefresh from '@vitejs/plugin-react';
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  base: './',
+  build: {
+    assetsDir: 'static',
+  },
   plugins: [
     reactRefresh(),
     tsconfigPaths(),
@@ -14,4 +18,4 @@ export default defineConfig({
       enableBuild: true,
     }),
   ],
-})
+});
