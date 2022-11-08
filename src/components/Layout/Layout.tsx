@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { GenreTabs } from '../GenreTabs/GenreTabs';
 import { HeroSection } from '../HeroSection/HeroSection';
 import { Footer } from '../Footer/Footer';
@@ -5,37 +6,45 @@ import { Header } from '../Header/Header';
 import { MovieList } from '../MovieList/MovieList';
 import { MainMenu } from '../MainMenu/MainMenu';
 import { ErrorBoundary } from '../ErrorBoundary';
-
-const GenreTabsItems = [
-  {
-    id: '0',
-    title: 'All',
-  },
-  {
-    id: '1',
-    title: 'Comedy',
-  },
-  {
-    id: '2',
-    title: 'Drama',
-  },
-  {
-    id: '3',
-    title: 'Crime',
-  },
-];
+import { AddMovie } from '../AddMovie/AddMovie';
+import { EditMovie } from '../EditMovie/EditMovie';
+import { genreTabsItems, movies } from '../../mocks/mockData';
+import { DeleteMovie } from '../DeleteMovie/DeleteMovie';
+import { SortFilter } from '../SortFilter/SortFilter';
 
 export function Layout() {
+  const [showAddMovieModal, setShowAddMovieModal] = useState(false);
+  const [showEditMovieModal, setShowEditMovieModal] = useState(false);
+  const [showDeleteMovieModal, setShowDeleteMovieModal] = useState(false);
+
+  const handleAddMovieClick = () => {
+    setShowAddMovieModal((prevState) => !prevState);
+  };
+
+  const handleEditMovieClick = () => {
+    setShowEditMovieModal((prevState) => !prevState);
+  };
+
+  const handleDeleteMovieClick = () => {
+    setShowDeleteMovieModal((prevState) => !prevState);
+  };
+
   return (
     <div className="w-full bg-zinc-800">
       <Header>
-        <MainMenu />
+        <MainMenu onAddMovieClick={handleAddMovieClick} />
         <HeroSection />
       </Header>
       <ErrorBoundary>
-        <GenreTabs items={GenreTabsItems} selectedItemId="2" />
-        <MovieList />
+        <div className="flex justify-between border-b-2 border-gray-500 ">
+          <GenreTabs items={genreTabsItems} selectedItemId="2" />
+          <SortFilter />
+        </div>
+        <MovieList data={movies} onEditClick={handleEditMovieClick} onDeleteClick={handleDeleteMovieClick} />
       </ErrorBoundary>
+      <AddMovie isShown={showAddMovieModal} onCloseModalClick={handleAddMovieClick} />
+      <EditMovie isShown={showEditMovieModal} onCloseModalClick={handleEditMovieClick} />
+      <DeleteMovie isShown={showDeleteMovieModal} onCloseModalClick={handleDeleteMovieClick} />
       <Footer />
     </div>
   );

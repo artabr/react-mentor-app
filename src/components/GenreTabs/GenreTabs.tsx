@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { GenreTab } from './GenreTab';
 
 type GenreTabsProps = {
@@ -9,11 +10,17 @@ type GenreTabsProps = {
 };
 
 export function GenreTabs({ items, selectedItemId }: GenreTabsProps) {
+  const [selectedId, setSelectedId] = useState(selectedItemId);
+
+  const handleItemClick = (id: string) => {
+    setSelectedId(id);
+  };
+
   return (
-    <div className="border-b-2 border-gray-500 text-center text-sm font-medium text-gray-500 dark:border-gray-700 dark:text-gray-400">
+    <div className="text-center text-sm font-medium text-gray-500 ">
       <ul className="-mb-px flex flex-wrap">
         {items?.map((item) => (
-          <GenreTab item={item} isSelected={item.id === selectedItemId} />
+          <GenreTab onItemClick={handleItemClick} item={item} isSelected={item.id === selectedId} />
         ))}
       </ul>
     </div>
