@@ -11,11 +11,13 @@ import { EditMovie } from '../EditMovie/EditMovie';
 import { genreTabsItems, movies } from '../../mocks/mockData';
 import { DeleteMovie } from '../DeleteMovie/DeleteMovie';
 import { SortFilter } from '../SortFilter/SortFilter';
+import { HeroMovieSection } from '../HeroMovieSection/HeroMovieSection';
 
 export function Layout() {
   const [showAddMovieModal, setShowAddMovieModal] = useState(false);
   const [showEditMovieModal, setShowEditMovieModal] = useState(false);
   const [showDeleteMovieModal, setShowDeleteMovieModal] = useState(false);
+  const [selectedCard, setSelectedCard] = useState<string | null>(null);
 
   const handleAddMovieClick = () => {
     setShowAddMovieModal((prevState) => !prevState);
@@ -29,18 +31,31 @@ export function Layout() {
     setShowDeleteMovieModal((prevState) => !prevState);
   };
 
+  const handleCardClick = (id?: string) => {
+    if (id) setSelectedCard(id);
+  };
+
   return (
     <div className="w-full bg-zinc-800">
       <Header>
         <MainMenu onAddMovieClick={handleAddMovieClick} />
-        <HeroSection />
+        {selectedCard ? (
+          <HeroMovieSection movie={movies.find((movie) => movie.id === selectedCard)} />
+        ) : (
+          <HeroSection />
+        )}
       </Header>
       <ErrorBoundary>
         <div className="flex justify-between border-b-2 border-gray-500 ">
           <GenreTabs items={genreTabsItems} selectedItemId="2" />
           <SortFilter />
         </div>
-        <MovieList data={movies} onEditClick={handleEditMovieClick} onDeleteClick={handleDeleteMovieClick} />
+        <MovieList
+          data={movies}
+          onEditClick={handleEditMovieClick}
+          onDeleteClick={handleDeleteMovieClick}
+          onCardClick={handleCardClick}
+        />
       </ErrorBoundary>
       <AddMovie isShown={showAddMovieModal} onCloseModalClick={handleAddMovieClick} />
       <EditMovie isShown={showEditMovieModal} onCloseModalClick={handleEditMovieClick} />
