@@ -1,9 +1,10 @@
 export type Movie = {
   id: string;
   title: string;
-  genre: string;
-  description: string;
-  rating: number;
-  duration: number;
-  year: number;
+  genres: string[];
+  overview: string;
+  runtime: number;
+  poster_path: string;
+  vote_average?: number;
+  release_date?: string;
 };

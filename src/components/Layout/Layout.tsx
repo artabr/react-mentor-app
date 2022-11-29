@@ -8,17 +8,23 @@ import { MainMenu } from '../MainMenu/MainMenu';
 import { ErrorBoundary } from '../ErrorBoundary';
 import { AddMovie } from '../AddMovie/AddMovie';
 import { EditMovie } from '../EditMovie/EditMovie';
-import { genreTabsItems, movies } from '../../mocks/mockData';
+import { genreTabsItems } from '../../mocks/mockData';
 import { DeleteMovie } from '../DeleteMovie/DeleteMovie';
 import { SortFilter } from '../SortFilter/SortFilter';
 import { HeroMovieSection } from '../HeroMovieSection/HeroMovieSection';
 import { MovieContextProvider } from '../../hooks/useMovieContext';
+import { useGetMoviesQuery } from '../../features/movies/moviesApi';
+import { useAppSelector } from '../../hooks/redux';
 
 export function Layout() {
   const [showAddMovieModal, setShowAddMovieModal] = useState(false);
   const [showEditMovieModal, setShowEditMovieModal] = useState(false);
   const [showDeleteMovieModal, setShowDeleteMovieModal] = useState(false);
   const [selectedCard, setSelectedCard] = useState<string | null>(null);
+
+  const filter = useAppSelector((state) => state.filter);
+
+  const { data = [] } = useGetMoviesQuery(filter);
 
   const handleAddMovieClick = () => {
     setShowAddMovieModal((prevState) => !prevState);
@@ -46,18 +52,18 @@ export function Layout() {
         <Header>
           <MainMenu onAddMovieClick={handleAddMovieClick} onReturnClick={handleReturnClick} />
           {selectedCard ? (
-            <HeroMovieSection movie={movies.find((movie) => movie.id === selectedCard)} />
+            <HeroMovieSection movie={data.find((movie) => movie.id === selectedCard)} />
           ) : (
             <HeroSection />
           )}
         </Header>
         <ErrorBoundary>
           <div className="flex justify-between border-b-2 border-gray-500 ">
-            <GenreTabs items={genreTabsItems} selectedItemId="2" />
+            <GenreTabs items={genreTabsItems} />
             <SortFilter />
           </div>
           <MovieList
-            data={movies}
+            data={data}
             onEditClick={handleEditMovieClick}
             onDeleteClick={handleDeleteMovieClick}
             onCardClick={handleCardClick}

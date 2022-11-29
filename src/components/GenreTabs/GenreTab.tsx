@@ -1,19 +1,24 @@
 import cx from 'classnames';
+import { useAppDispatch } from '../../hooks/redux';
+import { toggleFilterItem } from '../../features/filter/filterSlice';
 
 type GenreTabProps = {
   item?: {
-    id: string;
     title: string;
+    id?: string;
   };
   isSelected?: boolean;
-  onItemClick?: (id: string) => void;
+  onItemClick?: (id?: string) => void;
 };
 
 export function GenreTab({ item, isSelected, onItemClick }: GenreTabProps) {
+  const dispatch = useAppDispatch();
+
   const handleClick = () => {
     if (item && onItemClick) {
       onItemClick(item?.id);
     }
+    dispatch(toggleFilterItem(item?.id));
   };
 
   return (
