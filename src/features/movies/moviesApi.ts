@@ -3,7 +3,7 @@ import { Movie } from '../../types/types';
 
 export const moviesApi = createApi({
   reducerPath: 'movies',
-  baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:4000/' }),
+  baseQuery: fetchBaseQuery({ baseUrl: 'https://movie-api-aokc.onrender.com/' }),
   tagTypes: [],
   endpoints: (builder) => ({
     getMovies: builder.query<Movie[], string[]>({
