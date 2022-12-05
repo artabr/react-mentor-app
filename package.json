@@ -6,19 +6,8 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "serve": "vite preview",
-    "format": "prettier --write \"src/**/*.ts\" ",
-    "lint": "eslint ./src --fix"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "npx lint-staged",
-      "commit-msg": "npx --no -- commitlint --edit \"$1\""
-    }
-  },
-  "lint-staged": {
-    "*.{js,jsx,ts,tsx}": [
-      "eslint"
-    ]
+    "lint": "eslint",
+    "lint:fix": "eslint --fix"
   },
   "dependencies": {
     "@commitlint/cli": "^17.3.0",
