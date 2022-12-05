@@ -11,7 +11,8 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "lint-staged"
+      "pre-commit": "npx lint-staged",
+      "commit-msg": "npx --no -- commitlint --edit \"$1\""
     }
   },
   "lint-staged": {
@@ -20,6 +21,9 @@
     ]
   },
   "dependencies": {
+    "@commitlint/cli": "^17.3.0",
+    "@commitlint/config-conventional": "^17.3.0",
+    "@commitlint/prompt-cli": "^17.3.0",
     "@reduxjs/toolkit": "1.9.1",
     "classnames": "2.3.2",
     "react": "18.2.0",
