@@ -6,12 +6,10 @@ import { useMovieContext } from '../../hooks/useMovieContext';
 type MovieListProps = {
   id?: string;
   movie?: Movie;
-  onDeleteClick?: () => void;
-  onEditClick?: () => void;
   onCardClick: (id?: string) => void;
 };
 
-export function MovieCard({ id, movie, onDeleteClick, onEditClick, onCardClick }: MovieListProps) {
+export function MovieCard({ id, movie, onCardClick }: MovieListProps) {
   const { setSelectedMovieId } = useMovieContext();
 
   const handleCardClick = () => {
@@ -28,7 +26,7 @@ export function MovieCard({ id, movie, onDeleteClick, onEditClick, onCardClick }
       })}
     >
       <div className="absolute p-5">
-        <ContextMenu id={id} onDeleteClick={onDeleteClick} onEditClick={onEditClick} />
+        <ContextMenu id={id} />
       </div>
 
       <div className="">

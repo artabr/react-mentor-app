@@ -1,17 +1,27 @@
 import { useState } from 'react';
 import cx from 'classnames';
+import { useModalContext } from '../../hooks/useModalContext';
+import { DeleteMovie } from '../DeleteMovie/DeleteMovie';
+import { EditMovie } from '../EditMovie/EditMovie';
 
 type ContextMenuProps = {
   id?: string;
-  onDeleteClick?: () => void;
-  onEditClick?: () => void;
 };
 
-export function ContextMenu({ id = '', onDeleteClick, onEditClick }: ContextMenuProps) {
+export function ContextMenu({ id = '' }: ContextMenuProps) {
   const [isOpen, setIsOpen] = useState(false);
+  const { handleModal } = useModalContext();
 
   const handleOpenButton = () => {
     setIsOpen((prevState) => !prevState);
+  };
+
+  const onEditClick = () => {
+    handleModal(<EditMovie id={id} />, 'Edit Movie');
+  };
+
+  const onDeleteClick = () => {
+    handleModal(<DeleteMovie id={id} />, 'Delete Movie');
   };
 
   return (
