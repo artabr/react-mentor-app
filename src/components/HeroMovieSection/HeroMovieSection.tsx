@@ -9,7 +9,7 @@ export function HeroMovieSection({ movie }: HeroMovieSectionProps) {
     <div className="flex w-2/3 flex-col justify-between gap-8">
       <div className="flex flex-row gap-8">
         <div className="w-64 flex-none">
-          <img className="w-64" src={movie?.poster_path} alt="" />
+          <img className="aspect-poster w-64" src={movie?.poster_path} alt="" />
         </div>
         <div className="grow">
           <h2 className="text-3xl font-extralight uppercase tracking-wide text-white sm:text-4xl">

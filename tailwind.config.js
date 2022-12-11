@@ -11,6 +11,9 @@ module.exports = {
         desktop: { raw: '(min-width: 1024px)' },
         tablet: { raw: '(max-width: 1023px)' },
       },
+      aspectRatio: {
+        poster: '500 / 750',
+      },
     },
   },
 
