@@ -2,14 +2,39 @@ import { createRoot } from 'react-dom/client';
 import { Provider } from 'react-redux';
 
 import './index.css';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { MovieContextProvider } from './hooks/useMovieContext';
+import { ModalContextProvider } from './hooks/useModalContext';
 import { Layout } from './components/Layout/Layout';
 import { store } from './store/store';
+import { RouterError } from './components/RouterError/RouterError';
+import { MoviePage } from './components/MoviePage/MoviePage';
+import { HeroSection } from './components/HeroSection/HeroSection';
+
+const router = createBrowserRouter([
+  {
+    path: '/',
+    element: <Layout />,
+    errorElement: <RouterError />,
+    children: [
+      { index: true, element: <HeroSection /> },
+      {
+        path: 'movies/:movieId',
+        element: <MoviePage />,
+      },
+    ],
+  },
+]);
 
 const App = document.getElementById('root');
 function Root() {
   return (
     <Provider store={store}>
-      <Layout />
+      <ModalContextProvider>
+        <MovieContextProvider>
+          <RouterProvider router={router} />
+        </MovieContextProvider>
+      </ModalContextProvider>
     </Provider>
   );
 }

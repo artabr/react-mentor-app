@@ -1,9 +1,10 @@
+import { Link } from 'react-router-dom';
 import { useMovieContext } from '../../hooks/useMovieContext';
 import { useModalContext } from '../../hooks/useModalContext';
 import { AddMovie } from '../AddMovie/AddMovie';
 
 type MainMenuProps = {
-  onReturnClick: () => void;
+  onReturnClick?: () => void;
 };
 
 export function MainMenu({ onReturnClick }: MainMenuProps) {
@@ -16,17 +17,17 @@ export function MainMenu({ onReturnClick }: MainMenuProps) {
 
   const handleReturnClick = () => {
     setSelectedMovieId('');
-    onReturnClick();
+    if (onReturnClick) onReturnClick();
   };
 
   return (
     <nav className="w-full px-2 py-2.5 dark:bg-gray-900 sm:px-4">
       <div className="container mx-auto flex flex-wrap items-center justify-between">
-        <a href="https://epam.com/" className="flex items-center">
+        <Link to="/" className="flex items-center">
           <span className="self-center whitespace-nowrap text-2xl font-bold text-red-600 dark:text-white">
             movieroulette
           </span>
-        </a>
+        </Link>
         <div className="flex h-16 md:order-2">
           {!selectedMovieId ? (
             <button

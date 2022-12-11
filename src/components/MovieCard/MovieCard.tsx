@@ -1,4 +1,5 @@
 import cx from 'classnames';
+import { useNavigate } from 'react-router-dom';
 import { ContextMenu } from '../ContextMenu/ContextMenu';
 import { Movie } from '../../types/types';
 import { useMovieContext } from '../../hooks/useMovieContext';
@@ -6,15 +7,17 @@ import { useMovieContext } from '../../hooks/useMovieContext';
 type MovieListProps = {
   id?: string;
   movie?: Movie;
-  onCardClick: (id?: string) => void;
 };
 
-export function MovieCard({ id, movie, onCardClick }: MovieListProps) {
+export function MovieCard({ id, movie }: MovieListProps) {
   const { setSelectedMovieId } = useMovieContext();
+  const navigate = useNavigate();
 
   const handleCardClick = () => {
-    if (id) setSelectedMovieId(id);
-    onCardClick(id);
+    if (id) {
+      setSelectedMovieId(id);
+      navigate(`/movies/${id}`);
+    }
   };
 
   const { selectedMovieId } = useMovieContext();

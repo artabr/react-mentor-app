@@ -1,17 +1,12 @@
 import { GenreTab } from './GenreTab';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { clearFilterItems } from '../../features/filter/filterSlice';
+import { genreTabsItems } from '../../mocks/mockData';
 
-type GenreTabsProps = {
-  items?: {
-    id: string;
-    title: string;
-  }[];
-};
-
-export function GenreTabs({ items }: GenreTabsProps) {
+export function GenreTabs() {
   const filter = useAppSelector((state) => state.filter);
   const dispatch = useAppDispatch();
+  const items = [...genreTabsItems];
 
   const allItemsTab = {
     title: 'All',

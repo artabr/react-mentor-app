@@ -1,17 +1,17 @@
 import { MovieCard } from '../MovieCard/MovieCard';
-import { Movie } from '../../types/types';
+import { useAppSelector } from '../../hooks/redux';
+import { useGetMoviesQuery } from '../../features/movies/moviesApi';
 
-type MovieListProps = {
-  data: Movie[];
-  onCardClick: (id?: string) => void;
-};
+export function MovieList() {
+  const filter = useAppSelector((state) => state.filter);
 
-export function MovieList({ data, onCardClick }: MovieListProps) {
+  const { data = [] } = useGetMoviesQuery(filter);
+
   return (
     <div className="mx-auto mb-24 max-w-2xl p-4 sm:px-6 lg:max-w-7xl lg:px-8">
       <div className="mt-6 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
         {data.map((item) => (
-          <MovieCard id={item.id} movie={item} onCardClick={onCardClick} />
+          <MovieCard id={item.id} movie={item} />
         ))}
       </div>
     </div>
