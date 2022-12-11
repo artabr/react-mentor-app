@@ -7,7 +7,7 @@ export const moviesApi = createApi({
   tagTypes: [],
   endpoints: (builder) => ({
     getMovies: builder.query<Movie[], string[]>({
-      query: (filter: string[]) => ({ url: `movies?filter=${filter.join(',')}` }),
+      query: (filter: string[]) => ({ url: `movies?limit=12&filter=${filter.join(',')}` }),
       transformResponse: (response: { data: Movie[] }) => response.data,
     }),
   }),
