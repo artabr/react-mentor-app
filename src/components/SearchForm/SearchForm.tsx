@@ -1,4 +1,5 @@
 import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
 
 type FormData = {
   searchText: string;
@@ -6,10 +7,10 @@ type FormData = {
 
 export function SearchForm() {
   const { register, handleSubmit } = useForm<FormData>();
+  const navigate = useNavigate();
 
   const onSubmit = handleSubmit((data) => {
-    // eslint-disable-next-line no-console
-    console.log('Submitted form with data:', data);
+    navigate(`/search/${data.searchText}`);
   });
 
   return (
