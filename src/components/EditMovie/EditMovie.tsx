@@ -14,7 +14,7 @@ export function EditMovie({ id }: EditMovieProps) {
 
   return (
     // eslint-disable-next-line @typescript-eslint/no-misused-promises
-    <form data-bitwarden-watching="1" onSubmit={handleSubmit(onSubmit)}>
+    <form onSubmit={handleSubmit(onSubmit)}>
       <div className="space-y-6 p-6">
         <div className="text-white">Editing a movie with ID: {id}</div>
       </div>
