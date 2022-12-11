@@ -6,7 +6,7 @@ export function AddMovie() {
   return (
     <>
       <div className="space-y-6 p-6">
-        <form data-bitwarden-watching="1">
+        <form>
           <div className="mb-6 grid gap-6 md:grid-cols-2">
             <div>
               <InputField title="Title" placeholder="Moana" />
