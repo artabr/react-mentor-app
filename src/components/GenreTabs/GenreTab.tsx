@@ -1,9 +1,8 @@
 import cx from 'classnames';
-import { useAppDispatch } from '../../hooks/redux';
-import { toggleFilterItem } from '../../features/filter/filterSlice';
+import { createSearchParams, useSearchParams } from 'react-router-dom';
 
 type GenreTabProps = {
-  item?: {
+  item: {
     title: string;
     id?: string;
   };
@@ -12,13 +11,27 @@ type GenreTabProps = {
 };
 
 export function GenreTab({ item, isSelected, onItemClick }: GenreTabProps) {
-  const dispatch = useAppDispatch();
+  const [, setSearchParams] = useSearchParams();
 
   const handleClick = () => {
     if (item && onItemClick) {
       onItemClick(item?.id);
     }
-    dispatch(toggleFilterItem(item?.id));
+    if (item?.id) {
+      setSearchParams((prev: URLSearchParams) => {
+        const prevGenre = prev.get('genre');
+        const prevGenreArray = prevGenre ? decodeURIComponent(prevGenre).split(',') : [];
+        // if the item is present
+        if (prevGenreArray.includes(item?.id ?? ''))
+          return createSearchParams({
+            genre: prevGenreArray.filter((f) => f !== item?.id).join(','),
+          });
+        // if the item is absent
+        return createSearchParams({
+          genre: [...prevGenreArray, item?.id].join(','),
+        });
+      });
+    }
   };
 
   return (
@@ -31,7 +44,7 @@ export function GenreTab({ item, isSelected, onItemClick }: GenreTabProps) {
         })}
         onClick={handleClick}
       >
-        {item?.title}
+        {item.title}
       </button>
     </li>
   );

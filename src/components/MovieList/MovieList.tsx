@@ -1,14 +1,13 @@
-import { useParams } from 'react-router-dom';
+import { useParams, useSearchParams } from 'react-router-dom';
 import { MovieCard } from '../MovieCard/MovieCard';
-import { useAppSelector } from '../../hooks/redux';
 import { useGetMoviesQuery } from '../../features/movies/moviesApi';
-
-type RouterParams = {
-  searchQuery?: string;
-};
+import { RouterParams } from '../../types/types';
 
 export function MovieList() {
-  const filter = useAppSelector((state) => state.filter);
+  const [searchParams] = useSearchParams();
+
+  const filter = decodeURIComponent(searchParams.get('genre') ?? '').split(',') ?? [];
+
   const params = useParams<RouterParams>();
 
   const search = params.searchQuery ? params.searchQuery : '';

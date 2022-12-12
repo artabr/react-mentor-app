@@ -1,12 +1,19 @@
-import { useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
+import { Controller, useForm } from 'react-hook-form';
+import { useNavigate, useParams } from 'react-router-dom';
+import { RouterParams } from '../../types/types';
 
 type FormData = {
   searchText: string;
 };
 
 export function SearchForm() {
-  const { register, handleSubmit } = useForm<FormData>();
+  const params = useParams<RouterParams>();
+
+  const { handleSubmit, control } = useForm<FormData>({
+    defaultValues: {
+      searchText: params.searchQuery,
+    },
+  });
   const navigate = useNavigate();
 
   const onSubmit = handleSubmit((data) => {
@@ -20,13 +27,20 @@ export function SearchForm() {
         Search
       </label>
       <div className="relative w-full">
-        <input
-          type="text"
-          id="search"
-          className="block w-full rounded-lg border border-zinc-300 bg-zinc-700 p-2.5 pl-5 text-xl font-light text-zinc-50 opacity-75 focus:border-red-500 focus:ring-red-500  dark:border-zinc-600 dark:bg-zinc-700 dark:text-white dark:placeholder:text-zinc-400 dark:focus:border-red-500 dark:focus:ring-red-500"
-          placeholder="What do you want to watch?"
-          required
-          {...register('searchText')}
+        <Controller
+          name="searchText"
+          control={control}
+          rules={{ required: true }}
+          render={({ field }) => (
+            <input
+              type="text"
+              id="search"
+              className="block w-full rounded-lg border border-zinc-300 bg-zinc-700 p-2.5 pl-5 text-xl font-light text-zinc-50 opacity-75 focus:border-red-500 focus:ring-red-500  dark:border-zinc-600 dark:bg-zinc-700 dark:text-white dark:placeholder:text-zinc-400 dark:focus:border-red-500 dark:focus:ring-red-500"
+              placeholder="What do you want to watch?"
+              required
+              {...field}
+            />
+          )}
         />
       </div>
       <button

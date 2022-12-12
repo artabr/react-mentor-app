@@ -1,4 +1,4 @@
-import { useSearchParams } from 'react-router-dom';
+import { useMatch, useNavigate, useSearchParams } from 'react-router-dom';
 import { GenreTabs } from '../GenreTabs/GenreTabs';
 import { Footer } from '../Footer/Footer';
 import { Header } from '../Header/Header';
@@ -12,6 +12,11 @@ import { MoviePage } from '../MoviePage/MoviePage';
 
 export function Layout() {
   const [searchParams] = useSearchParams();
+  const match = useMatch('/');
+  const navigate = useNavigate();
+
+  if (match) navigate('/search');
+
   const movieId = searchParams.get('movie');
 
   return (

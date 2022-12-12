@@ -1,11 +1,14 @@
+import { useSearchParams } from 'react-router-dom';
 import { GenreTab } from './GenreTab';
-import { useAppDispatch, useAppSelector } from '../../hooks/redux';
-import { clearFilterItems } from '../../features/filter/filterSlice';
 import { genreTabsItems } from '../../mocks/mockData';
+import { useSearchParamsState } from '../../hooks/useSearchParamsState';
 
 export function GenreTabs() {
-  const filter = useAppSelector((state) => state.filter);
-  const dispatch = useAppDispatch();
+  const [searchParams] = useSearchParams();
+  const [, setSearchParamsState] = useSearchParamsState('genre', '');
+
+  const filter = decodeURIComponent(searchParams.get('genre') ?? '').split(',') ?? [];
+
   const items = [...genreTabsItems];
 
   const allItemsTab = {
@@ -13,7 +16,7 @@ export function GenreTabs() {
   };
 
   const handleResetClick = () => {
-    dispatch(clearFilterItems());
+    setSearchParamsState('');
   };
 
   return (
