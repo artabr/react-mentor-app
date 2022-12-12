@@ -1,5 +1,5 @@
 import cx from 'classnames';
-import { useNavigate } from 'react-router-dom';
+import { createSearchParams, useNavigate } from 'react-router-dom';
 import { ContextMenu } from '../ContextMenu/ContextMenu';
 import { Movie } from '../../types/types';
 import { useMovieContext } from '../../hooks/useMovieContext';
@@ -16,7 +16,11 @@ export function MovieCard({ id, movie }: MovieListProps) {
   const handleCardClick = () => {
     if (id) {
       setSelectedMovieId(id);
-      navigate(`/movies/${id}`);
+      navigate({
+        search: createSearchParams({
+          movie: id,
+        }).toString(),
+      });
     }
   };
 

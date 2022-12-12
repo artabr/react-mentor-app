@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useMovieContext } from '../../hooks/useMovieContext';
 import { useModalContext } from '../../hooks/useModalContext';
 import { AddMovie } from '../AddMovie/AddMovie';
@@ -10,6 +10,7 @@ type MainMenuProps = {
 export function MainMenu({ onReturnClick }: MainMenuProps) {
   const { selectedMovieId, setSelectedMovieId } = useMovieContext();
   const { handleModal } = useModalContext();
+  const navigate = useNavigate();
 
   const onAddMovieClick = () => {
     handleModal(<AddMovie />, 'Add Movie');
@@ -17,6 +18,10 @@ export function MainMenu({ onReturnClick }: MainMenuProps) {
 
   const handleReturnClick = () => {
     setSelectedMovieId('');
+    navigate({
+      search: '',
+    });
+
     if (onReturnClick) onReturnClick();
   };
 

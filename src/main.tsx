@@ -8,7 +8,6 @@ import { ModalContextProvider } from './hooks/useModalContext';
 import { Layout } from './components/Layout/Layout';
 import { store } from './store/store';
 import { RouterError } from './components/RouterError/RouterError';
-import { MoviePage } from './components/MoviePage/MoviePage';
 import { HeroSection } from './components/HeroSection/HeroSection';
 
 const router = createBrowserRouter([
@@ -18,10 +17,6 @@ const router = createBrowserRouter([
     errorElement: <RouterError />,
     children: [
       { index: true, element: <HeroSection /> },
-      {
-        path: 'movies/:movieId',
-        element: <MoviePage />,
-      },
       {
         path: 'search/:searchQuery',
         element: <HeroSection />,
