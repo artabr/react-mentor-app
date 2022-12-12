@@ -22,7 +22,7 @@ export function MovieCard({ id, movie, onCardClick }: MovieListProps) {
   return (
     <div
       className={cx('max-w-sm dark:border-gray-700 dark:bg-gray-800', {
-        'ring-4 ring-red-500 rounded-xl': selectedMovieId === id,
+        'ring-4 ring-red-500 rounded-xl overflow-hidden': selectedMovieId === id,
       })}
     >
       <div className="absolute p-5">
