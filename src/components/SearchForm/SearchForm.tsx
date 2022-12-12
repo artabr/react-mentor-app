@@ -1,6 +1,20 @@
+import { useForm } from 'react-hook-form';
+
+type FormData = {
+  searchText: string;
+};
+
 export function SearchForm() {
+  const { register, handleSubmit } = useForm<FormData>();
+
+  const onSubmit = handleSubmit((data) => {
+    // eslint-disable-next-line no-console
+    console.log('Submitted form with data:', data);
+  });
+
   return (
-    <form className="flex items-center">
+    // eslint-disable-next-line @typescript-eslint/no-misused-promises
+    <form className="flex items-center" onSubmit={onSubmit}>
       <label htmlFor="search" className="sr-only">
         Search
       </label>
@@ -11,6 +25,7 @@ export function SearchForm() {
           className="block w-full rounded-lg border border-zinc-300 bg-zinc-700 p-2.5 pl-5 text-xl font-light text-zinc-50 opacity-75 focus:border-red-500 focus:ring-red-500  dark:border-zinc-600 dark:bg-zinc-700 dark:text-white dark:placeholder:text-zinc-400 dark:focus:border-red-500 dark:focus:ring-red-500"
           placeholder="What do you want to watch?"
           required
+          {...register('searchText')}
         />
       </div>
       <button

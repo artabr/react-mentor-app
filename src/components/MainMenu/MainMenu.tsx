@@ -1,12 +1,18 @@
 import { useMovieContext } from '../../hooks/useMovieContext';
+import { useModalContext } from '../../hooks/useModalContext';
+import { AddMovie } from '../AddMovie/AddMovie';
 
 type MainMenuProps = {
-  onAddMovieClick: () => void;
   onReturnClick: () => void;
 };
 
-export function MainMenu({ onAddMovieClick, onReturnClick }: MainMenuProps) {
+export function MainMenu({ onReturnClick }: MainMenuProps) {
   const { selectedMovieId, setSelectedMovieId } = useMovieContext();
+  const { handleModal } = useModalContext();
+
+  const onAddMovieClick = () => {
+    handleModal(<AddMovie />, 'Add Movie');
+  };
 
   const handleReturnClick = () => {
     setSelectedMovieId('');
