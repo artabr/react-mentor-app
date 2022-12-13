@@ -52,7 +52,7 @@ export function SortFilter() {
         type="button"
         onClick={handleOpenButton}
       >
-        {getLabelOfSort(sort.sortBy, sort.sortOrder)}
+        {getLabelOfSort(sort.sortBy, sort.sortOrder) ?? 'Sort Filter'}
         <svg
           className="ml-1 h-4 w-4"
           aria-hidden="true"
