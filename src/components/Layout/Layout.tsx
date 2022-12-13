@@ -1,41 +1,37 @@
+import { useMatch, useNavigate } from 'react-router-dom';
 import { GenreTabs } from '../GenreTabs/GenreTabs';
-import { HeroSection } from '../HeroSection/HeroSection';
 import { Footer } from '../Footer/Footer';
 import { Header } from '../Header/Header';
 import { MovieList } from '../MovieList/MovieList';
 import { MainMenu } from '../MainMenu/MainMenu';
 import { ErrorBoundary } from '../ErrorBoundary';
-
-const GenreTabsItems = [
-  {
-    id: '0',
-    title: 'All',
-  },
-  {
-    id: '1',
-    title: 'Comedy',
-  },
-  {
-    id: '2',
-    title: 'Drama',
-  },
-  {
-    id: '3',
-    title: 'Crime',
-  },
-];
+import { SortFilter } from '../SortFilter/SortFilter';
+import { Modal } from '../Modal/Modal';
+import { HeroSection } from '../HeroSection/HeroSection';
+import { MoviePage } from '../MoviePage/MoviePage';
+import { useSearchParamsState } from '../../hooks/useSearchParamsState';
 
 export function Layout() {
+  const [searchParamsState] = useSearchParamsState('movie');
+  const match = useMatch('/');
+  const navigate = useNavigate();
+
+  if (match) navigate('/search');
+
   return (
     <div className="w-full bg-zinc-800">
       <Header>
         <MainMenu />
-        <HeroSection />
+        {searchParamsState ? <MoviePage /> : <HeroSection />}
       </Header>
       <ErrorBoundary>
-        <GenreTabs items={GenreTabsItems} selectedItemId="2" />
+        <div className="flex justify-between border-b-2 border-gray-500 ">
+          <GenreTabs />
+          <SortFilter />
+        </div>
         <MovieList />
       </ErrorBoundary>
+      <Modal />
       <Footer />
     </div>
   );

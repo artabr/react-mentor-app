@@ -1,16 +1,43 @@
-import imgUrl from '../../assets/images/Pulp-Fiction1.png';
+import cx from 'classnames';
+import { ContextMenu } from '../ContextMenu/ContextMenu';
+import { Movie } from '../../types/types';
+import { useSearchParamsState } from '../../hooks/useSearchParamsState';
 
-export function MovieCard() {
+type MovieListProps = {
+  id: string;
+  movie?: Movie;
+};
+
+export function MovieCard({ id, movie }: MovieListProps) {
+  const [searchParamsState, setSearchParamsState] = useSearchParamsState('movie');
+
+  const handleCardClick = () => {
+    if (id) {
+      setSearchParamsState(() => id);
+    }
+  };
+
   return (
-    <div className="max-w-sm dark:border-gray-700 dark:bg-gray-800">
-      <a href="#">
-        <img src={imgUrl} alt="" />
-      </a>
-      <div className="p-5">
-        <a href="#">
-          <h5 className="mb-2 text-2xl font-medium tracking-tight text-gray-200 dark:text-white">Pulp Fiction</h5>
+    <div
+      className={cx('max-w-sm dark:border-gray-700 dark:bg-gray-800', {
+        'ring-4 ring-red-500 rounded-xl overflow-hidden': searchParamsState === id,
+      })}
+    >
+      <div className="absolute p-5">
+        <ContextMenu id={id} />
+      </div>
+
+      <div className="">
+        {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions */}
+        <a className="cursor-pointer " onClick={handleCardClick}>
+          <img className="aspect-poster" src={movie?.poster_path} alt="" />
+          <h5 className="py-2.5 px-5 text-2xl font-medium tracking-tight text-gray-200 dark:text-white">
+            {movie?.title ?? 'Untitled movie'}
+          </h5>
         </a>
-        <p className="mb-3 font-normal text-gray-400 dark:text-gray-400">Action & Adventure</p>
+        <p className="mb-3 px-5 font-normal text-gray-400 dark:text-gray-400">
+          {movie?.genres?.join(', ') ?? 'No genre'}
+        </p>
       </div>
     </div>
   );

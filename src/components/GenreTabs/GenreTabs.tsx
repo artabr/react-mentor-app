@@ -1,19 +1,28 @@
 import { GenreTab } from './GenreTab';
+import { genreTabsItems } from '../../mocks/mockData';
+import { useSearchParamsState } from '../../hooks/useSearchParamsState';
 
-type GenreTabsProps = {
-  items?: {
-    id: string;
-    title: string;
-  }[];
-  selectedItemId?: string;
-};
+export function GenreTabs() {
+  const [searchParamsState, setSearchParamsState] = useSearchParamsState('genre');
 
-export function GenreTabs({ items, selectedItemId }: GenreTabsProps) {
+  const filter = decodeURIComponent(searchParamsState).split(',') ?? [];
+
+  const items = [...genreTabsItems];
+
+  const allItemsTab = {
+    title: 'All',
+  };
+
+  const handleResetClick = () => {
+    setSearchParamsState(() => '');
+  };
+
   return (
-    <div className="border-b-2 border-gray-500 text-center text-sm font-medium text-gray-500 dark:border-gray-700 dark:text-gray-400">
+    <div className="text-center text-sm font-medium text-gray-500 ">
       <ul className="-mb-px flex flex-wrap">
+        <GenreTab onItemClick={handleResetClick} item={allItemsTab} isSelected={filter.length === 0} />
         {items?.map((item) => (
-          <GenreTab item={item} isSelected={item.id === selectedItemId} />
+          <GenreTab item={item} isSelected={filter.includes(item.id)} />
         ))}
       </ul>
     </div>
