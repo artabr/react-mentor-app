@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { Movie } from '../../types/types';
+import { ApiMovie, Movie } from '../../types/types';
 
 type GetMoviesQueryArgs = {
   search: string;
@@ -15,7 +15,8 @@ export const moviesApi = createApi({
       query: ({ search, filter }: GetMoviesQueryArgs) => ({
         url: `movies?search=${search}&searchBy=title&filter=${filter.join(',')}&limit=12`,
       }),
-      transformResponse: (response: { data: Movie[] }) => response.data,
+      transformResponse: (response: { data: ApiMovie[] }) =>
+        response.data.map((responseItem) => ({ ...responseItem, id: responseItem.id.toString() })),
     }),
     getMovieById: builder.query<Movie, string>({
       query: (movieId: string) => ({

@@ -1,4 +1,4 @@
-import { useMatch, useNavigate, useSearchParams } from 'react-router-dom';
+import { useMatch, useNavigate } from 'react-router-dom';
 import { GenreTabs } from '../GenreTabs/GenreTabs';
 import { Footer } from '../Footer/Footer';
 import { Header } from '../Header/Header';
@@ -9,21 +9,20 @@ import { SortFilter } from '../SortFilter/SortFilter';
 import { Modal } from '../Modal/Modal';
 import { HeroSection } from '../HeroSection/HeroSection';
 import { MoviePage } from '../MoviePage/MoviePage';
+import { useSearchParamsState } from '../../hooks/useSearchParamsState';
 
 export function Layout() {
-  const [searchParams] = useSearchParams();
+  const [searchParamsState] = useSearchParamsState('movie');
   const match = useMatch('/');
   const navigate = useNavigate();
 
   if (match) navigate('/search');
 
-  const movieId = searchParams.get('movie');
-
   return (
     <div className="w-full bg-zinc-800">
       <Header>
         <MainMenu />
-        {movieId ? <MoviePage /> : <HeroSection />}
+        {searchParamsState ? <MoviePage /> : <HeroSection />}
       </Header>
       <ErrorBoundary>
         <div className="flex justify-between border-b-2 border-gray-500 ">

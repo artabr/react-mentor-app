@@ -1,5 +1,5 @@
 import cx from 'classnames';
-import { createSearchParams, useSearchParams } from 'react-router-dom';
+import { useSearchParamsState } from '../../hooks/useSearchParamsState';
 
 type GenreTabProps = {
   item: {
@@ -11,25 +11,20 @@ type GenreTabProps = {
 };
 
 export function GenreTab({ item, isSelected, onItemClick }: GenreTabProps) {
-  const [, setSearchParams] = useSearchParams();
+  const [, setSearchParamsState] = useSearchParamsState('genre');
 
   const handleClick = () => {
     if (item && onItemClick) {
       onItemClick(item?.id);
     }
     if (item?.id) {
-      setSearchParams((prev: URLSearchParams) => {
-        const prevGenre = prev.get('genre');
-        const prevGenreArray = prevGenre ? decodeURIComponent(prevGenre).split(',') : [];
+      setSearchParamsState((prev) => {
+        const prevGenreArray = prev ? decodeURIComponent(prev).split(',') : [];
         // if the item is present
-        if (prevGenreArray.includes(item?.id ?? ''))
-          return createSearchParams({
-            genre: prevGenreArray.filter((f) => f !== item?.id).join(','),
-          });
+        if (item?.id && prevGenreArray.includes(item?.id))
+          return prevGenreArray.filter((f) => f !== item?.id).join(',');
         // if the item is absent
-        return createSearchParams({
-          genre: [...prevGenreArray, item?.id].join(','),
-        });
+        return [...prevGenreArray, item?.id].join(',');
       });
     }
   };

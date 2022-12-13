@@ -1,24 +1,49 @@
 import { useState } from 'react';
 import cx from 'classnames';
+import { useSearchParamsState } from '../../hooks/useSearchParamsState';
 
-type SortFilterProps = {
-  id?: string;
-  onDeleteClick?: () => void;
-  onEditClick?: () => void;
-};
+const sortMenu = [
+  {
+    label: 'Release date ASC',
+    sortBy: 'release_date',
+    sortOrder: 'asc',
+  },
+  {
+    label: 'Release date DESC',
+    sortBy: 'release_date',
+    sortOrder: 'desc',
+  },
+  {
+    label: 'Rating ASC',
+    sortBy: 'vote_average',
+    sortOrder: 'asc',
+  },
+  {
+    label: 'Rating DESC',
+    sortBy: 'vote_average',
+    sortOrder: 'desc',
+  },
+];
 
-export function SortFilter({ id = '', onDeleteClick, onEditClick }: SortFilterProps) {
+export function SortFilter() {
   const [isOpen, setIsOpen] = useState(false);
+  const [sortByFilter, setSortByFilter] = useSearchParamsState('sortBy');
+  const [sortOrderFilter, setSortOrderFilter] = useSearchParamsState('sortOrder');
 
   const handleOpenButton = () => {
     setIsOpen((prevState) => !prevState);
   };
 
+  const handleSortItemClick = (sortByValue: string, sortOrderValue: string) => {
+    setSortByFilter(() => sortByValue);
+    setSortOrderFilter(() => sortOrderValue);
+  };
+
   return (
     <div>
       <button
-        id={`sortFilterButton${id}`}
-        data-dropdown-toggle={`sortFilter${id}`}
+        id="sortFilterButton"
+        data-dropdown-toggle="sortFilter"
         className="inline-flex items-center px-4 py-2.5 text-center text-sm font-medium uppercase text-white hover:bg-zinc-700 focus:outline-none  "
         type="button"
         onClick={handleOpenButton}
@@ -36,30 +61,23 @@ export function SortFilter({ id = '', onDeleteClick, onEditClick }: SortFilterPr
         </svg>
       </button>
       <div
-        id={`sortFilter${id}`}
+        id="sortFilter"
         className={cx('absolute right-0 z-10  w-44 divide-y divide-gray-100 rounded bg-white shadow dark:bg-gray-700', {
           hidden: !isOpen,
         })}
       >
-        <ul className="py-1 text-sm text-gray-700 dark:text-gray-200" aria-labelledby={`sortFilterButton${id}`}>
-          <li>
-            <a
-              href="#"
-              className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-              onClick={onEditClick}
-            >
-              Release date
-            </a>
-          </li>
-          <li>
-            <a
-              href="#"
-              className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-              onClick={onDeleteClick}
-            >
-              Rating
-            </a>
-          </li>
+        <ul className="py-1 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="sortFilterButton">
+          {sortMenu.map(({ label, sortBy, sortOrder }) => (
+            <li>
+              <button
+                type="button"
+                className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                onClick={() => handleSortItemClick(sortBy, sortOrder)}
+              >
+                {label}
+              </button>
+            </li>
+          ))}
         </ul>
       </div>
     </div>

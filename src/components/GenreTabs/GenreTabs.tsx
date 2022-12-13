@@ -1,13 +1,11 @@
-import { useSearchParams } from 'react-router-dom';
 import { GenreTab } from './GenreTab';
 import { genreTabsItems } from '../../mocks/mockData';
 import { useSearchParamsState } from '../../hooks/useSearchParamsState';
 
 export function GenreTabs() {
-  const [searchParams] = useSearchParams();
-  const [, setSearchParamsState] = useSearchParamsState('genre', '');
+  const [searchParamsState, setSearchParamsState] = useSearchParamsState('genre');
 
-  const filter = decodeURIComponent(searchParams.get('genre') ?? '').split(',') ?? [];
+  const filter = decodeURIComponent(searchParamsState).split(',') ?? [];
 
   const items = [...genreTabsItems];
 
@@ -16,7 +14,7 @@ export function GenreTabs() {
   };
 
   const handleResetClick = () => {
-    setSearchParamsState('');
+    setSearchParamsState(() => '');
   };
 
   return (

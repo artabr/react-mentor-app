@@ -9,6 +9,10 @@ export type Movie = {
   release_date?: string;
 };
 
+export type ApiMovie = Omit<Movie, 'id'> & {
+  id: number;
+};
+
 export type RouterParams = {
   searchQuery?: string;
 };

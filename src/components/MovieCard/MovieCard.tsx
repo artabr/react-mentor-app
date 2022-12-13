@@ -1,31 +1,26 @@
 import cx from 'classnames';
 import { ContextMenu } from '../ContextMenu/ContextMenu';
 import { Movie } from '../../types/types';
-import { useMovieContext } from '../../hooks/useMovieContext';
 import { useSearchParamsState } from '../../hooks/useSearchParamsState';
 
 type MovieListProps = {
-  id?: string;
+  id: string;
   movie?: Movie;
 };
 
 export function MovieCard({ id, movie }: MovieListProps) {
-  const { setSelectedMovieId } = useMovieContext();
-  const [, setSearchParamsState] = useSearchParamsState('movie', '');
+  const [searchParamsState, setSearchParamsState] = useSearchParamsState('movie');
 
   const handleCardClick = () => {
     if (id) {
-      setSelectedMovieId(id);
-      setSearchParamsState(id);
+      setSearchParamsState(() => id);
     }
   };
-
-  const { selectedMovieId } = useMovieContext();
 
   return (
     <div
       className={cx('max-w-sm dark:border-gray-700 dark:bg-gray-800', {
-        'ring-4 ring-red-500 rounded-xl overflow-hidden': selectedMovieId === id,
+        'ring-4 ring-red-500 rounded-xl overflow-hidden': searchParamsState === id,
       })}
     >
       <div className="absolute p-5">
