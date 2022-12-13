@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import cx from 'classnames';
-import { useSearchParamsState } from '../../hooks/useSearchParamsState';
+import { useTanyaSearchParamsState } from '../../hooks/useTanyaSearchParamsState';
 
 const sortMenu = [
   {
@@ -25,18 +25,22 @@ const sortMenu = [
   },
 ];
 
+const getLabelOfSort = (sortBy: string, sortOrder: string): string | undefined =>
+  sortMenu.find((item) => item.sortBy === sortBy && item.sortOrder === sortOrder)?.label;
+
 export function SortFilter() {
   const [isOpen, setIsOpen] = useState(false);
-  const [sortByFilter, setSortByFilter] = useSearchParamsState('sortBy');
-  const [sortOrderFilter, setSortOrderFilter] = useSearchParamsState('sortOrder');
+  const [sort, setSort] = useTanyaSearchParamsState(['sortBy', 'sortOrder']);
 
   const handleOpenButton = () => {
     setIsOpen((prevState) => !prevState);
   };
 
   const handleSortItemClick = (sortByValue: string, sortOrderValue: string) => {
-    setSortByFilter(() => sortByValue);
-    setSortOrderFilter(() => sortOrderValue);
+    setSort(() => ({
+      sortBy: sortByValue,
+      sortOrder: sortOrderValue,
+    }));
   };
 
   return (
@@ -48,7 +52,7 @@ export function SortFilter() {
         type="button"
         onClick={handleOpenButton}
       >
-        Release date
+        {getLabelOfSort(sort.sortBy, sort.sortOrder)}
         <svg
           className="ml-1 h-4 w-4"
           aria-hidden="true"
