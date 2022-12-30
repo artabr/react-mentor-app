@@ -31,7 +31,10 @@ export function MovieCard({ id, movie }: MovieListProps) {
         {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions */}
         <a className="cursor-pointer " onClick={handleCardClick}>
           <img className="aspect-poster" src={movie?.poster_path} alt="" />
-          <h5 className="py-2.5 px-5 text-2xl font-medium tracking-tight text-gray-200 dark:text-white">
+          <h5
+            className="py-2.5 px-5 text-2xl font-medium tracking-tight text-gray-200 dark:text-white"
+            data-testid="movie-card-title"
+          >
             {movie?.title ?? 'Untitled movie'}
           </h5>
         </a>

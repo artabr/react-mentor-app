@@ -4,7 +4,7 @@ import userEvent from '@testing-library/user-event';
 import { BrowserRouter, MemoryRouter, Route, Routes, useLocation } from 'react-router-dom';
 import { SearchForm } from './SearchForm';
 
-export function LocationDisplay() {
+function LocationDisplay() {
   const location = useLocation();
 
   return <div data-testid="location-display">{location.pathname}</div>;
@@ -18,6 +18,9 @@ describe('SearchForm component', () => {
       </MemoryRouter>,
     );
 
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-call
     expect(screen).toMatchSnapshot();
   });
 
