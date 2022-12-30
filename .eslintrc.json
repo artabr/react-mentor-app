@@ -11,7 +11,9 @@
   "plugins": [
     "tailwindcss",
     "@typescript-eslint",
-    "prettier"
+    "prettier",
+    "import",
+    "simple-import-sort" // Plugin for sorting imports in file.
   ],
   "rules": {
     "prettier/prettier": [
@@ -37,6 +39,31 @@
     "jsx-a11y/anchor-is-valid": "off"
   },
   "overrides": [
+    {
+      "files": ["**/__tests__/**/*.[jt]s?(x)", "**/?(*.)+(spec|test).[jt]s?(x)"],
+      "extends": [
+        "plugin:jest/recommended",
+        "plugin:jest/style",
+        "plugin:jest-dom/recommended",
+        "plugin:testing-library/react"
+      ],
+      "plugins": ["jest", "jest-dom", "testing-library"]
+    },
+    {
+      "files": ["./cypress/**/*.cy.ts"],
+      "extends": ["plugin:cypress/recommended"],
+      "plugins": ["cypress"],
+      "rules": {
+        "cypress/no-force": "warn",
+        "cypress/assertion-before-screenshot": "warn",
+        "cypress/require-data-selectors": "warn",
+        "cypress/no-pause": "error",
+        "import/no-extraneous-dependencies": "off"
+      },
+      "env": {
+        "cypress/globals": true // enable Cypress global variables.
+      }
+    },
     {
       "files": [
         "*.ts",
