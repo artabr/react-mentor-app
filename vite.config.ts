@@ -3,16 +3,17 @@ import { defineConfig } from 'vitest/config';
 import { checker } from 'vite-plugin-checker';
 import tsconfigPaths from 'vite-tsconfig-paths';
 
-import reactRefresh from '@vitejs/plugin-react';
+import react from '@vitejs/plugin-react';
 
 // https://vitejs.dev/config/
 export default defineConfig({
   base: './',
   build: {
     assetsDir: 'static',
+    minify: false,
   },
   plugins: [
-    reactRefresh(),
+    react(),
     tsconfigPaths(),
     checker({
       typescript: true,

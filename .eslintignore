@@ -5,3 +5,4 @@ coverage
 src/setupTests.ts
 prerender.js
 server.js
+vite.config.ts
