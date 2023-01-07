@@ -27,6 +27,7 @@ export async function createServer(
    */
   let vite
   if (!isProd) {
+    console.log('Non production environment.');
     vite = await (
       await import('vite')
     ).createServer({
